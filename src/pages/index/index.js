@@ -1,11 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Map } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import { add, minus, asyncAdd } from '../../actions/counter'
 
 import './index.scss'
-
 
 @connect(({ counter }) => ({
   counter
@@ -22,24 +21,45 @@ import './index.scss'
 }))
 class Index extends Component {
 
-    config = {
+  config = {
     navigationBarTitleText: '首页'
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
+  state = {
+    location: {},
   }
 
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
+  componentDidMount() {
+    Taro.getLocation({
+      success: ({ longitude, latitude }) => {
+        this.setState({
+          location: {
+            longitude,
+            latitude
+          }
+        })
+      },
+      fail(err) {
+        console.log(err)
+      }
+    })
+  }
 
   render () {
+    const {
+      location: {
+        longitude,
+        latitude
+      }
+    } = this.state
     return (
-      <View className='index'>
-        <Text>侯总，燥起来</Text>
+      <View className='page-index'>
+        <Map
+          className='comp-map'
+          show-location
+          longitude={longitude}
+          latitude={latitude}
+        />
         {/* <Button className='add_btn' onClick={this.props.add}>+</Button>
         <Button className='dec_btn' onClick={this.props.dec}>-</Button>
         <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>

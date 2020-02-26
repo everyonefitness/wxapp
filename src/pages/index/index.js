@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Map } from '@tarojs/components'
+import { View, Map, Button } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import { add, minus, asyncAdd } from '../../actions/counter'
@@ -60,6 +60,7 @@ class Index extends Component {
           longitude={longitude}
           latitude={latitude}
         />
+        <Button open-type='contact'>进入客服会话</Button>
         {/* <Button className='add_btn' onClick={this.props.add}>+</Button>
         <Button className='dec_btn' onClick={this.props.dec}>-</Button>
         <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
